@@ -5,9 +5,38 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #100200;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.navbar {
+  background-color: transparent !important;
+  color : #FFF  !important;
+  box-shadow : none  !important;
+  transition: all 0.3s linear;
+}
+
+.navbar.scrolled {
+  background-color:#FFF  !important;
+  color : #282c34  !important;
+  box-shadow : 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)  !important;
+}
+
+.logo {
+  height: 80px;
+  transition: all 0.1s linear;
+}
+
+.logo.scrolled {
+  height: 50px;
+}
+
+.bandeau {
+  background:center no-repeat url("automne.jpg") #100200;
+  min-height: 300px;
+  z-index: 0;
 }
