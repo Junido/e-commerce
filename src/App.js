@@ -1,18 +1,17 @@
 import './App.css';
 import Navbar from './component/Navbar';
 import Char from './component/Char';
-
+import {Container, Box } from '@mui/material';
+import { border } from '@mui/system';
 function App() {
   return (
     <div className="App">
       <Navbar />
-      <div className="bandeau"></div>
-      <div style={{backgroundColor:'#fff',width:'700px'}}>
-      {/* <iframe src="https://open.spotify.com/embed/playlist/0u8dARhWkHIg2XVpdrNxIx" width="100%" height="380" 
-      frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-      </iframe> */}
-        <Char />
-      </div>
+      <Container maxWidth="lg">
+        <Box sx={{ boxShadow: 0,border: '1px solid rgba(153,153,153,0.2)', borderRadius:'6px',backgroundColor:'rgb(255 255 255)', padding:'20px' }}>
+          <Char />
+        </Box>
+      </Container>
     </div>
   );
 }

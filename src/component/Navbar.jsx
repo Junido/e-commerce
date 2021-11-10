@@ -15,7 +15,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
-import logo from '../TWOTHIRDS.png';
+import logo from '../whale.png';
 import Tabs from '@mui/material/Tabs';
 import LinkTab from '@mui/material/Tab';
 import Tab from '@mui/material/Tab';

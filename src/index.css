@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #100200;
+  background-color: rgba(0,62,193,0.03);
 }
 
 code {
@@ -15,7 +15,7 @@ code {
 
 .navbar {
   background-color: transparent !important;
-  color : #FFF  !important;
+  color : #282c34  !important;
   box-shadow : none  !important;
   transition: all 0.3s linear;
 }
@@ -36,7 +36,7 @@ code {
 }
 
 .bandeau {
-  background:center no-repeat url("automne.jpg") #100200;
+  /* background:center no-repeat url("automne.jpg") #100200; */
   min-height: 300px;
   z-index: 0;
 }
