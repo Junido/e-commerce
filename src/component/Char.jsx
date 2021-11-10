@@ -1,61 +1,37 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-
+import coinBaseService from '../service/CoinbaseService';
+import {FormControl, InputLabel,Select,MenuItem ,Grid} from '@mui/material';
+import { useState, useEffect } from 'react';
 
 function Char() {
+  
+    
+    const [coin, setCoin] = useState([]);
+    const [crypto, setcrypto] = React.useState('ADA-USD');
 
-    const datas = [
-        {
-        "time": "2021-11-08T15:28:00.772444Z",
-        "trade_id": 5611600,
-        "price": "1.75340000",
-        "size": "4077.93000000",
-        "side": "sell"
-        },
-        {
-        "time": "2021-11-08T15:28:00.77023Z",
-        "trade_id": 5611599,
-        "price": "1.75340000",
-        "size": "350.68000000",
-        "side": "sell"
-        },
-        {
-        "time": "2021-11-08T15:27:39.033963Z",
-        "trade_id": 5611598,
-        "price": "1.75390000",
-        "size": "54.55000000",
-        "side": "sell"
-        },
-        {
-        "time": "2021-11-08T15:27:12.988858Z",
-        "trade_id": 5611597,
-        "price": "1.75340000",
-        "size": "48.72000000",
-        "side": "buy"
-        },
-        {
-        "time": "2021-11-08T15:26:56.073571Z",
-        "trade_id": 5611596,
-        "price": "1.75380000",
-        "size": "80.51000000",
-        "side": "buy"
-        }
-    ];
+    useEffect(() => {
+      LoadChar('ADA-USD');
+    }, []);
+    
+    const LoadChar = (mcrypto) =>{
+      coinBaseService.GetProductTrades(mcrypto).then((items) =>{
+        setCoin(items);
+      });
+    }
 
     const getSellPrice = () => {
-        var res = datas.filter(x => x.side ==='sell').map(x => x.price);
-        console.log(res);
+        var res = coin.filter(x => x.side ==='sell').map(x => x.price);
         return res;
     }
 
     const getBuyPrice = () => {
-        var res = datas.filter(x => x.side ==='buy').map(x => x.price);
-        console.log(res);
+        var res = coin.filter(x => x.side ==='buy').map(x => x.price);
         return res;
     }
 
     const getTime = () => {
-        var times = datas.map(x => x.time);
+        var times = coin.map(x => Date(x.time).split(" ")[4]);
         return times;
     }
     
@@ -63,45 +39,90 @@ function Char() {
         labels: getTime(),
         datasets: [
           {
-            label: 'Buy of Price',
+            label: 'Buy',
             data: getBuyPrice(),
             fill: false,
             backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
           },
           {
-            label: 'Sell of Price',
+            label: 'Sell',
             data: getSellPrice(),
             fill: false,
             backgroundColor: 'rgb(54, 162, 235)',
-            borderColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
           },
         ],
-      };
+    };
       
-      const options = {
-        scales: {
-            yAxes: [
-                {
-                  type: 'linear',
-                  display: true,
-                  position: 'left',
-                  id: 'Buy',
-                },
-                {
-                  type: 'linear',
-                  display: true,
-                  position: 'right',
-                  id: 'sell',
-                },
-              ],
+    const options = {
+      scales: {
+          x: {
+            grid: {
+              display:false
+            },
+            display:true
+          },
+          y: {
+            grid: {
+              display:false
+            },
+            display:false
+          },
+          tension:0.1,
+          
+      },
+      elements: {
+        point:{
+          radius:0
         },
-        tension: 0.1
-      };
+      },
+      plugins: {
+        legend: {
+            display:false,
+            labels: {
+                // This more specific font property overrides the global property
+                font: {
+                    size: 20
+                },
+                
+            }
+        }
+      }
+    }
 
+      
+    const handleChange = (event) => {
+      console.log(event.target.value);
+      setcrypto(event.target.value);
+      LoadChar(event.target.value);
+    };
     return (
         <div>
-             <Line data={data} options={options} />
+            <Grid container spacing={3}>
+              <Grid item xs={6}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Crypto</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={crypto}
+                      label="Crypto"
+                      onChange={handleChange}
+                    >
+                      <MenuItem value='ADA-USD'>Cardano</MenuItem>
+                      <MenuItem value='SHIB-USD'>SHIBA INU</MenuItem>
+                      <MenuItem value='ETH-USD'>Ethereum</MenuItem>
+                    </Select>
+                  </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                  wait
+              </Grid>
+              <Grid item xs={12}>
+                <Line data={data} options={options} />
+              </Grid>
+            </Grid>
         </div>
     )
 }
