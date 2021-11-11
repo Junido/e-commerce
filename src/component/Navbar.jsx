@@ -161,7 +161,7 @@ export default function PrimarySearchAppBar() {
   const scrollFunction = () => {
     var header = document.getElementById("header");
     var logo = document.getElementById("logo");
-    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+    if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
 
       header.classList.add('scrolled');
       logo.classList.add('scrolled');

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import coinBaseService from '../service/CoinbaseService';
-import {FormControl, InputLabel,Select,MenuItem ,Grid} from '@mui/material';
+import {FormControl, InputLabel,Select,MenuItem ,Grid, Typography, ButtonGroup, Button} from '@mui/material';
 import { useState, useEffect } from 'react';
 
 function Char() {
@@ -9,14 +9,24 @@ function Char() {
     
     const [coin, setCoin] = useState([]);
     const [crypto, setcrypto] = React.useState('ADA-USD');
+    const [taux, setTaux] = useState(0);
+    const [isTauxMin, setisTauxMin] = useState(0);
 
     useEffect(() => {
-      LoadChar('ADA-USD');
+
+      const interval = setInterval(() => {
+        LoadChar('ADA-EUR');
+      }, 5000);
+      return () => clearInterval(interval);
+     
     }, []);
     
     const LoadChar = (mcrypto) =>{
       coinBaseService.GetProductTrades(mcrypto).then((items) =>{
         setCoin(items);
+        var mTaux = (((Number(items[0]?.price) - Number(items[items.length - 1]?.price)) / Number(items[0]?.price)) * 100).toFixed(2);
+        setTaux(mTaux);
+        setisTauxMin(Math.sign(mTaux) == -1);
       });
     }
 
@@ -31,7 +41,7 @@ function Char() {
     }
 
     const getTime = () => {
-        var times = coin.map(x => Date(x.time).split(" ")[4]);
+        var times = coin.map(x => x.time.split("T")[1].split(".")[0]);
         return times;
     }
     
@@ -80,10 +90,11 @@ function Char() {
       plugins: {
         legend: {
             display:false,
+            align:'end',
             labels: {
                 // This more specific font property overrides the global property
                 font: {
-                    size: 20
+                    size: 12
                 },
                 
             }
@@ -91,6 +102,46 @@ function Char() {
       }
     }
 
+    const style = {
+      boxPrice:{
+        display: 'flex',
+        flexDirection: 'row',
+        fontFamily: 'Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+      },
+      price: {
+        fontSize :'48px',
+        color:'black',
+        textAlign:'left',
+        paddingLeft:'7px',
+        lineHeight: '1',
+      },
+      devise: {
+        fontSize :'32px',
+        position:'relative',
+        verticalAlign:'baseline',
+        fontWeight: 400
+      },
+      tauxMin: {
+        color:'red',
+        fontSize:'18px',
+        fontWeight: 400,
+        paddingLeft:'5px'
+      },
+      tauxPlus: {
+        color:'green',
+        fontSize:'18px',
+        fontWeight: 400,
+        paddingLeft:'5px'
+      },
+      buttonBox:{
+        textAlign:'right',
+      },
+      buttonGroup:{
+        color:'black',
+        border:'none',
+        fontSize:'12px',
+      }
+    }
       
     const handleChange = (event) => {
       console.log(event.target.value);
@@ -100,7 +151,7 @@ function Char() {
     return (
         <div>
             <Grid container spacing={3}>
-              <Grid item xs={6}>
+              {/* <Grid item xs={12} md={3} >
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Crypto</InputLabel>
                     <Select
@@ -115,12 +166,40 @@ function Char() {
                       <MenuItem value='ETH-USD'>Ethereum</MenuItem>
                     </Select>
                   </FormControl>
+              </Grid> */}
+              <Grid style={style.boxPrice} item xs={12} md={6}>
+                <Typography style={style.devise} variant="span" >
+                  €
+                </Typography>
+                <Typography style={style.price} variant="span" >
+                  {coin && Number(coin[0]?.price).toFixed(2).split(".")[0]}
+                </Typography>
+                <Typography style={style.devise} variant="span" >
+                  {coin && `.${Number(coin[0]?.price).toFixed(2).split(".")[1]}`}
+                </Typography>
+                <Typography style={isTauxMin ? style.tauxMin : style.tauxPlus} variant="span" >
+                  {coin && 
+                    `${taux}%`
+                  }
+                </Typography>
               </Grid>
-              <Grid item xs={6}>
-                  wait
+              <Grid style={style.buttonBox} item xs={12} md={6}>
+                <ButtonGroup variant="text">
+                  <Button style={style.buttonGroup}>1H</Button>
+                  <Button style={style.buttonGroup}>1D</Button>
+                  <Button style={style.buttonGroup}>1W</Button>
+                  <Button style={style.buttonGroup}>1M</Button>
+                  <Button style={style.buttonGroup}>1Y</Button>
+                  <Button style={style.buttonGroup}>ALL</Button>
+                </ButtonGroup>
               </Grid>
               <Grid item xs={12}>
                 <Line data={data} options={options} />
+                <hr/>
+              </Grid>
+              <Grid item xs={12}>
+                <h3>Market stats</h3>
+
               </Grid>
             </Grid>
         </div>
