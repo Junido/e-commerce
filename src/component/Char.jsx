@@ -15,13 +15,9 @@ function Char(props) {
     const [crypto, setCrypto] = useState('');
     const [period, setPeriod] = useState('7d');
 
-    // useEffect(() => {
-    //   if (period != props.crypto) {
-    //     //LoadChar(props.crypto);
-    //     //setCrypto(props.crypto);
-    //     GetCoinHistory(1,period);
-    //   }
-    // });
+    useEffect(() => {
+        GetCoinHistory(1,period);
+    },setPeriod);
 
     const LoadChar = (mcrypto) =>{
       coinBaseService.GetProductTrades(mcrypto).then((items) =>{

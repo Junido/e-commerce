@@ -2,11 +2,20 @@ import React,  { useState, useEffect } from 'react';
 import './App.css';
 import Navbar from './component/Navbar';
 import Char from './component/Char';
-import {FormControl, InputLabel,Select,MenuItem ,Container, Box, Grid } from '@mui/material';
+import LateralBar from './component/LateralBar';
 
+import { FormControl, InputLabel,Select,MenuItem ,Container, Box, Grid} from '@mui/material';
 function App() {
 
+  const  reportWindowSize = () => {
+    console.log(window.screen.width);
+  }
+  window.addEventListener('resize', reportWindowSize);
+  
   const [crypto, setCrypto] = useState('');
+  const [openMenu, setOpenMenu] = useState(true);
+  
+
   const style = {
     boxShadow: 0,
     border: '1px solid rgba(153,153,153,0.2)', 
@@ -22,8 +31,9 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
-      <Container maxWidth="lg">
+      <Navbar setOpenMenu = {setOpenMenu} openMenu= {openMenu} />
+      <LateralBar open={openMenu} />
+      <Container sx={{ overflow: 'auto' }} maxWidth="lg">
       <Grid container spacing={3}>
         <Grid item xs={12} md={9}>
           <Box sx={style}>
@@ -49,8 +59,6 @@ function App() {
           </Box>
         </Grid>
       </Grid>
-        
-      
       </Container>
     </div>
   );

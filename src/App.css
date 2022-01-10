@@ -1,3 +1,11 @@
+@media only screen and (max-width: 900px) {
+  body {
+    background-color: lightblue;
+  }
+  
+}
+
+
 .App {
   text-align: center;
   padding-top: 90px;
