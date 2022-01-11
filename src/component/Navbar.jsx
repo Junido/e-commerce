@@ -30,31 +30,11 @@ function Navbar(props) {
           >
             Cryptocurrency
           </Typography>
-          <Box sx={{ overflow: 'auto' }}>
-              <div className='nav-menu'>
-                <List className='mlist'>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                        <ListItemIcon>
-                            {index % 2 === 0 ? <MoveToInbox /> : <Mail />}
-                        </ListItemIcon>
-                        <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                        <ListItemIcon>
-                            {index % 2 === 0 ? <MoveToInbox /> : <Mail />}
-                        </ListItemIcon>
-                        <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
-              </div>
-            </Box>
-          <IconButton className='btnMenu'  onClick={MenuClick} >
-            <MenuIcon onClick={MenuClick}/>
-          </IconButton>
+          <div className='btnMenu' >
+            <IconButton  onClick={MenuClick} >
+              <MenuIcon onClick={MenuClick}/>
+            </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
     </Box>

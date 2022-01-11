@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const headers = {
     'x-rapidapi-host': 'coinranking1.p.rapidapi.com',
-    'x-rapidapi-key': 'c1383aa2cdmshe0f0c5e7ce5493dp129a37jsnd2dc0802ab41'
+    'x-rapidapi-key': '***'
 }
 
 class CoinbaseService {

@@ -7,13 +7,8 @@ import LateralBar from './component/LateralBar';
 import { FormControl, InputLabel,Select,MenuItem ,Container, Box, Grid} from '@mui/material';
 function App() {
 
-  const  reportWindowSize = () => {
-    console.log(window.screen.width);
-  }
-  window.addEventListener('resize', reportWindowSize);
-  
   const [crypto, setCrypto] = useState('');
-  const [openMenu, setOpenMenu] = useState(true);
+  const [openMenu, setOpenMenu] = useState(false);
   
 
   const style = {
@@ -33,7 +28,7 @@ function App() {
     <div className="App">
       <Navbar setOpenMenu = {setOpenMenu} openMenu= {openMenu} />
       <LateralBar open={openMenu} />
-      <Container sx={{ overflow: 'auto' }} maxWidth="lg">
+      <Container className='app-container' sx={{ overflow: 'auto'}} maxWidth="lg">
       <Grid container spacing={3}>
         <Grid item xs={12} md={9}>
           <Box sx={style}>
