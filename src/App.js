@@ -32,7 +32,7 @@ function App() {
       <Grid container spacing={3}>
         <Grid item xs={12} md={9}>
           <Box sx={style}>
-            <Char crypto="7d" />
+            <Char/>
           </Box>
         </Grid>
         <Grid item xs={12} md={3}>

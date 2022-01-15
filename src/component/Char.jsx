@@ -2,9 +2,8 @@ import React,  { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import coinBaseService from '../services/CoinbaseService';
 import {Grid, Typography, ButtonGroup, Button} from '@mui/material';
-import { registerables } from 'chart.js';
-import millify from 'millify';
-
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 function Char(props) {
   
@@ -14,6 +13,9 @@ function Char(props) {
     const [isTauxMin, setisTauxMin] = useState(0);
     const [crypto, setCrypto] = useState('');
     const [period, setPeriod] = useState('7d');
+    const [openAlert, setopenAlert] = useState(false);
+    const [msgAlert, setmsgAlert] = useState();
+    const [typeAlert, settypeAlert] = useState('error');
 
     useEffect(() => {
         GetCoinHistory(1,period);
@@ -41,6 +43,12 @@ function Char(props) {
         setTaux(mTaux);
         setisTauxMin(Math.sign(mTaux) == -1);
         setCoin(items);
+      }).catch(error => {
+        setmsgAlert(error.response.data.message);
+        setopenAlert({ openAlert: true});
+        console.log(openAlert);
+        console.log(error.response.data.message);
+        console.log(error.response.status);
       });
     }
     const getPrice = () => {
@@ -155,8 +163,22 @@ function Char(props) {
      
     }
 
+
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setopenAlert(false);
+    };
+
     return (
         <div>
+            <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose} >
+              <MuiAlert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                  {msgAlert}
+              </MuiAlert>
+            </Snackbar>
             <Grid container spacing={3}>
               {/* <Grid item xs={12} md={3} >
                   <FormControl fullWidth>
