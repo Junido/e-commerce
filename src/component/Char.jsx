@@ -3,8 +3,6 @@ import { Line } from 'react-chartjs-2';
 import coinBaseService from '../services/CoinbaseService';
 import {Grid, Typography, ButtonGroup, Button} from '@mui/material';
 import AlertBar from '../component/AlertBar';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
 
 function Char(props) {
   
@@ -12,44 +10,27 @@ function Char(props) {
     const [coin, setCoin] = useState([]);
     const [taux, setTaux] = useState(0);
     const [isTauxMin, setisTauxMin] = useState(0);
-    const [crypto, setCrypto] = useState('');
     const [period, setPeriod] = useState('7d');
     const [stateAlert, setstateAlert] = useState({
       msg:"",
-      open:false
+      myopen:false
     });
-    const [msgAlert, setmsgAlert] = useState();
     
     useEffect(() => {
         GetCoinHistory(1,period);
-    },setPeriod);
-
-    const LoadChar = (mcrypto) =>{
-      coinBaseService.GetProductTrades(mcrypto).then((items) =>{
-        setCoin(items);
-        var mTaux = (((Number(items[0]?.price) - Number(items[items.length - 1]?.price)) / Number(items[0]?.price)) * 100).toFixed(2);
-        setTaux(mTaux);
-        setisTauxMin(Math.sign(mTaux) == -1);
-      });
-    }
-
-    const GetCoins = () => {
-      coinBaseService.GetCoins().then((items) =>{
-          console.log(items);
-      });
-    }
+    },[period]);
 
     const GetCoinHistory = (coin,period) => {
       coinBaseService.GetCoinHistory(1,period).then((items) =>{
         console.log(items);
         var mTaux = (((Number(items[items.length - 1]?.price) - Number(items[0]?.price)) / Number(items[items.length - 1]?.price)) * 100).toFixed(2);
         setTaux(mTaux);
-        setisTauxMin(Math.sign(mTaux) == -1);
+        setisTauxMin(Math.sign(mTaux) === -1);
         setCoin(items);
       }).catch(error => {
           setstateAlert({
             msg:error.response.data.message,
-            open:true
+            myopen:true
           });
       });
     }
@@ -81,11 +62,7 @@ function Char(props) {
           yAxes: {
             ticks: {
               beginAtZero: true
-            },
-            // grid: {
-            //   display:false
-            // },
-            // display:true
+            }
           }
       },
       elements: {
@@ -98,7 +75,6 @@ function Char(props) {
             display:false,
             align:'end',
             labels: {
-                // This more specific font property overrides the global property
                 font: {
                     size: 12
                 },
@@ -167,24 +143,8 @@ function Char(props) {
 
     return (
         <div>
-           <AlertBar open={stateAlert.open} msg={stateAlert.msg} />
+           <AlertBar open={stateAlert.myopen} msg={stateAlert.msg} />
             <Grid container spacing={3}>
-              {/* <Grid item xs={12} md={3} >
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Crypto</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={crypto}
-                      label="Crypto"
-                      onChange={handleChange}
-                    >
-                      <MenuItem value='ADA-USD'>Cardano</MenuItem>
-                      <MenuItem value='SHIB-USD'>SHIBA INU</MenuItem>
-                      <MenuItem value='ETH-USD'>Ethereum</MenuItem>
-                    </Select>
-                  </FormControl>
-              </Grid> */}
               <Grid style={style.boxPrice} item xs={12} md={6}>
                 <Typography style={style.devise} variant="span" >
                   $
@@ -203,25 +163,18 @@ function Char(props) {
               </Grid>
               <Grid style={style.buttonBox} item xs={12} md={6}>
                 <ButtonGroup variant="text">
-                  {/* 3h 24h 7d 30d 3m 1y 3y 5y */}
-                  {/* <Button  onClick={handleClick} id="1h" style={period == "1h" ? style.buttonActive : style.buttonGroup}>1H</Button> */}
-                  <Button onClick={handleClick} id="24h" style={period == "24h" ? style.buttonActive : style.buttonGroup}>1D</Button>
-                  <Button onClick={handleClick} id="7d" style={period == "7d" ? style.buttonActive : style.buttonGroup}>1W</Button>
-                  <Button onClick={handleClick} id="30d" style={period == "30d" ? style.buttonActive : style.buttonGroup}>1M</Button>
-                  {/* <Button onClick={handleClick} id="3m" style={period == "3m" ? style.buttonActive : style.buttonGroup}>3M</Button> */}
-                  <Button onClick={handleClick} id="1y" style={period == "1y" ? style.buttonActive : style.buttonGroup}>1Y</Button>
-                  {/* <Button onClick={handleClick} id="3y" style={period == "3y" ? style.buttonActive : style.buttonGroup}>3Y</Button> */}
-                  <Button onClick={handleClick} id="5y" style={period == "5y" ? style.buttonActive : style.buttonGroup}>ALL</Button>
+                  {/* 24h 7d 30d 1y 5y */}
+                  <Button onClick={handleClick} id="24h" style={period === "24h" ? style.buttonActive : style.buttonGroup}>1D</Button>
+                  <Button onClick={handleClick} id="7d" style={period === "7d" ? style.buttonActive : style.buttonGroup}>1W</Button>
+                  <Button onClick={handleClick} id="30d" style={period === "30d" ? style.buttonActive : style.buttonGroup}>1M</Button>
+                  <Button onClick={handleClick} id="1y" style={period === "1y" ? style.buttonActive : style.buttonGroup}>1Y</Button>
+                  <Button onClick={handleClick} id="5y" style={period === "5y" ? style.buttonActive : style.buttonGroup}>ALL</Button>
                 </ButtonGroup>
               </Grid>
               <Grid item xs={12}>
                 <Line data={data} options={options} />
                 <hr/>
               </Grid>
-              {/* <Grid item xs={12}>
-                <h3>Market stats</h3>
-
-              </Grid> */}
             </Grid>
         </div>
     )

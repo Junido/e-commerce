@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { ListItemIcon,Toolbar, Box, Drawer,Divider,ListItemText,List,ListItem} from '@mui/material';
 import { Mail, MoveToInbox } from '@mui/icons-material';
-import Navbar from './Navbar';
 function LateralBar(props) {
 
-    const {open} = props;
     const  reportWindowSize = () => {
         console.log(window.innerWidth);
         return window.innerWidth;
@@ -38,12 +36,10 @@ function LateralBar(props) {
             </List>
         </Box>
     )
-       
-
     return (
         <Drawer
-            variant={ "permanent" }
-            open={open}
+           
+            open={false}
             sx={{
                 width: 200,
                 flexShrink: 0,

@@ -1,14 +1,8 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import {Badge, Avatar, MenuItem, Menu, InputBase, Typography, IconButton, Box, AppBar, ListItemIcon,Toolbar,Divider,ListItemText,List,ListItem  }  from '@mui/material';
-import { Mail, MoveToInbox, AccountCircle } from '@mui/icons-material';
-
+import {Avatar,Typography, IconButton, Box, AppBar,Toolbar}  from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import logoRocket  from '../Rocket.gif';
-import Tabs from '@mui/material/Tabs';
-import LinkTab from '@mui/material/Tab';
-import Tab from '@mui/material/Tab';
+
 function Navbar(props) {
 
   const MenuClick = () => {
@@ -20,7 +14,7 @@ function Navbar(props) {
       <AppBar id="header" className="navbar" position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} >
         <Toolbar>
            <Avatar alt="Rocket" sx={{ width: 60, height: 60}} >
-              <img src={logoRocket} width="150px" />
+              <img src={logoRocket} alt="logo Rocket" width="150px" />
             </Avatar>
           <Typography
             variant="h5"
