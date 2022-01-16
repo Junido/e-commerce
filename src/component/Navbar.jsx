@@ -2,6 +2,8 @@ import * as React from 'react';
 import {Avatar,Typography, IconButton, Box, AppBar,Toolbar}  from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import logoRocket  from '../Rocket.gif';
+import { Link } from "react-router-dom";
+import { NoEncryption } from '@mui/icons-material';
 
 function Navbar(props) {
 
@@ -14,8 +16,11 @@ function Navbar(props) {
       <AppBar id="header" className="navbar" position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} >
         <Toolbar>
            <Avatar alt="Rocket" sx={{ width: 60, height: 60}} >
-              <img src={logoRocket} alt="logo Rocket" width="150px" />
-            </Avatar>
+                <Link to="/">
+                  <img src={logoRocket} alt="logo Rocket" width="150px" />
+                </Link>
+          </Avatar>
+          <Link to="/" style={{ textDecoration: 'inherit' }}>
           <Typography
             variant="h5"
             noWrap
@@ -24,6 +29,7 @@ function Navbar(props) {
           >
             Cryptocurrency
           </Typography>
+          </Link>
           <div className='btnMenu' >
             <IconButton  onClick={MenuClick} >
               <MenuIcon onClick={MenuClick}/>

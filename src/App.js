@@ -1,60 +1,26 @@
 import React,  { useState} from 'react';
+import { BrowserRouter as Router,Route, Routes } from "react-router-dom";
 import './App.css';
 import Navbar from './component/Navbar';
-import Char from './component/Char';
+import {Home, Char } from './Pages';
 import LateralBar from './component/LateralBar';
-
-import { FormControl, InputLabel,Select,MenuItem ,Container, Box, Grid} from '@mui/material';
+import { Container} from '@mui/material';
 function App() {
 
-  const [crypto, setCrypto] = useState('');
   const [openMenu, setOpenMenu] = useState(false);
-  
-
-  const style = {
-    boxShadow: 0,
-    border: '1px solid rgba(153,153,153,0.2)', 
-    borderRadius:'6px',
-    backgroundColor:'rgb(255 255 255)', 
-    padding:'15px'
-  }
-
-  const handleChange = (event) => {
-    //console.log(event.target.value);
-    setCrypto(event.target.value);
-  };
-
+ 
   return (
     <div className="App">
-      <Navbar setOpenMenu = {setOpenMenu} openMenu= {openMenu} />
-      <LateralBar open={openMenu} />
-      <Container className='app-container' sx={{ overflow: 'auto'}} maxWidth="lg">
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={9}>
-          <Box sx={style}>
-            <Char/>
-          </Box>
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <Box sx={style}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Crypto</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={crypto}
-                label="Crypto"
-                onChange={handleChange}
-              >
-                <MenuItem value='ADA_USDT'>Cardano</MenuItem>
-                <MenuItem value='SHIB_USDT'>SHIBA INU</MenuItem>
-                <MenuItem value='ETH_USDT'>Ethereum</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </Grid>
-      </Grid>
-      </Container>
+        <Router>
+          <Navbar setOpenMenu = {setOpenMenu} openMenu= {openMenu} />
+          <LateralBar open={openMenu} />
+          <Container className='app-container' sx={{ overflow: 'auto'}} maxWidth="lg">
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path='/char' element={<Char />} />
+            </Routes>
+          </Container>
+        </Router>
     </div>
   );
 }

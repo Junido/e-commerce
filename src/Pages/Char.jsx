@@ -142,7 +142,7 @@ function Char(props) {
     }
 
     return (
-        <div>
+        <div >
            <AlertBar open={stateAlert.myopen} msg={stateAlert.msg} />
             <Grid container spacing={3}>
               <Grid style={style.boxPrice} item xs={12} md={6}>
@@ -171,9 +171,8 @@ function Char(props) {
                   <Button onClick={handleClick} id="5y" style={period === "5y" ? style.buttonActive : style.buttonGroup}>ALL</Button>
                 </ButtonGroup>
               </Grid>
-              <Grid item xs={12}>
-                <Line data={data} options={options} />
-                <hr/>
+              <Grid  item xs={12}>
+                <Line className='char-container' data={data} options={options} />
               </Grid>
             </Grid>
         </div>

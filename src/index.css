@@ -8,7 +8,18 @@ body {
   background-color: rgba(0,62,193,0.03);
 }
 
+.app-container {
+  box-shadow: 0;
+  border: 1px solid rgba(153,153,153,0.2);
+  border-radius:6px;
+  background-Color:rgb(255 255 255);
+  padding:15px;
 
+}
+
+.char-container {
+  max-height: 400px;
+}
 
 @media only screen and (min-width: 900px) {
   .app-container {
@@ -17,14 +28,25 @@ body {
   .btnMenu {
     display: none ;
   }
+  .App {
+    margin-top: 50px;
+  }
 }
 
 @media only screen and (max-width: 899px) {
-
+  .app-container {
+    margin: 10px 0 0 0 !important;
+    height: 100%  !important;
+    border:none !important;
+    border-radius: 0;
+  }
   .btnMenu {
     display: flex;
     flex: 1;
     justify-content: flex-end;
+  }
+  body {
+    background-color: #fff;
   }
 }
 
