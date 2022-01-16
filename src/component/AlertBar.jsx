@@ -10,7 +10,6 @@ const AlertBar = (props) => {
     });
 
     useEffect(() => {
-        console.log(props);
         SetState({open:props.open,msg:props.msg});
     },[props]);
 

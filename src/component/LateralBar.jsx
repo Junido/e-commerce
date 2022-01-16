@@ -4,7 +4,6 @@ import { Mail, MoveToInbox } from '@mui/icons-material';
 function LateralBar(props) {
 
     const  reportWindowSize = () => {
-        console.log(window.innerWidth);
         return window.innerWidth;
     }
 

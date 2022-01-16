@@ -4,7 +4,7 @@ import coinBaseService from '../services/CoinbaseService';
 import {Grid, Typography, ButtonGroup, Button} from '@mui/material';
 import AlertBar from '../component/AlertBar';
 
-function Char(props) {
+function Details(props) {
   
     
     const [coin, setCoin] = useState([]);
@@ -17,12 +17,12 @@ function Char(props) {
     });
     
     useEffect(() => {
-        GetCoinHistory(1,period);
+        GetCoinHistory('Qwsogvtv82FCd',period);
     },[period]);
 
     const GetCoinHistory = (coin,period) => {
-      coinBaseService.GetCoinHistory(1,period).then((items) =>{
-        console.log(items);
+      coinBaseService.GetCoinHistory(coin,period).then((items) =>{
+
         var mTaux = (((Number(items[items.length - 1]?.price) - Number(items[0]?.price)) / Number(items[items.length - 1]?.price)) * 100).toFixed(2);
         setTaux(mTaux);
         setisTauxMin(Math.sign(mTaux) === -1);
@@ -135,7 +135,6 @@ function Char(props) {
    const handleClick = (event) => {
 
       var value = event.target.id;
-      console.log(value);
       setPeriod(value);
       GetCoinHistory(1,value);
      
@@ -179,4 +178,4 @@ function Char(props) {
     )
 }
 
-export default Char
+export default Details

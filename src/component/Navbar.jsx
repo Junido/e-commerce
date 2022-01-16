@@ -3,7 +3,6 @@ import {Avatar,Typography, IconButton, Box, AppBar,Toolbar}  from '@mui/material
 import MenuIcon from '@mui/icons-material/Menu';
 import logoRocket  from '../Rocket.gif';
 import { Link } from "react-router-dom";
-import { NoEncryption } from '@mui/icons-material';
 
 function Navbar(props) {
 
