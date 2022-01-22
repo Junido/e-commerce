@@ -17,7 +17,7 @@ function App() {
           <Container className='app-container' sx={{ overflow: 'auto'}} maxWidth="lg">
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path='/details' element={<Details />} />
+                <Route path='/details/:id' element={<Details />} />
             </Routes>
           </Container>
         </Router>

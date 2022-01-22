@@ -3,10 +3,11 @@ import { Line } from 'react-chartjs-2';
 import coinBaseService from '../services/CoinbaseService';
 import {Grid, Typography, ButtonGroup, Button} from '@mui/material';
 import AlertBar from '../component/AlertBar';
-
+import { useParams } from "react-router-dom";
+ 
 function Details(props) {
-  
-    
+    var { id } = useParams();
+    const [coinDetails, setCoinDetails] = useState([]);
     const [coin, setCoin] = useState([]);
     const [taux, setTaux] = useState(0);
     const [isTauxMin, setisTauxMin] = useState(0);
@@ -17,11 +18,30 @@ function Details(props) {
     });
     
     useEffect(() => {
-        GetCoinHistory('Qwsogvtv82FCd',period);
+      GetCoin(id);
+      GetCoinHistory(period);
     },[period]);
 
-    const GetCoinHistory = (coin,period) => {
-      coinBaseService.GetCoinHistory(coin,period).then((items) =>{
+    const GetCoin = (coin) => {
+      coinBaseService.GetCoin(coin).then((items) =>{
+        console.log('coin',items);
+        setCoinDetails({
+          price:items.price,
+          name:items.name,
+          description:items.description,
+          change: items.change,
+          iconUrl: items.iconUrl
+        });
+      }).catch(error => {
+        setstateAlert({
+          msg:error?.response?.data?.message,
+          myopen:true
+        });
+    });
+    }
+
+    const GetCoinHistory = (period) => {
+        coinBaseService.GetCoinHistory(id,period).then((items) =>{
 
         var mTaux = (((Number(items[items.length - 1]?.price) - Number(items[0]?.price)) / Number(items[items.length - 1]?.price)) * 100).toFixed(2);
         setTaux(mTaux);
@@ -29,18 +49,19 @@ function Details(props) {
         setCoin(items);
       }).catch(error => {
           setstateAlert({
-            msg:error.response.data.message,
+            msg:error?.response?.data?.message,
             myopen:true
           });
       });
     }
+
     const getPrice = () => {
-        var res = coin.map(x => x.price);
+        var res = coin.reverse(x => x.timestamp*1000).map(x => x.price);
         return res;
     }
 
     const getTime = () => {
-        var times = coin.map(x => new  Date(x.timestamp).toLocaleDateString());
+        var times = coin.reverse(x => x.timestamp*1000).map(x => new Date(x.timestamp*1000).toDateString());
         return times;
     }
     
@@ -136,7 +157,7 @@ function Details(props) {
 
       var value = event.target.id;
       setPeriod(value);
-      GetCoinHistory(1,value);
+      GetCoinHistory(value);
      
     }
 
@@ -149,11 +170,11 @@ function Details(props) {
                   $
                 </Typography>
                 <Typography style={style.price} variant="span" >
-                  {coin && Number(coin[coin.length - 1]?.price).toFixed(2).split(".")[0]}
+                  {coinDetails && coinDetails.price}
                 </Typography>
-                <Typography style={style.devise} variant="span" >
-                  {coin && `.${coin[coin.length - 1]?.price.split(".")[1]}`}
-                </Typography>
+                {/* <Typography style={style.devise} variant="span" >
+                  {coin && `.${coin[coin.length - 1]?.price}`}
+                </Typography> */}
                 <Typography style={isTauxMin ? style.tauxMin : style.tauxPlus} variant="span" >
                   {coin && 
                     `${taux}%`

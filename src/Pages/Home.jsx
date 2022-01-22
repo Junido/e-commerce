@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Service from '../services/CoinbaseService';
 import AlertBar from '../component/AlertBar';
+import { useNavigate  } from "react-router-dom";
 import {Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, Grid  } from '@mui/material';
 const Home = () => {
-
+    const history = useNavigate();
     const [coins, setCoins] = useState();
 
     const [stateAlert, setstateAlert] = useState({
@@ -24,6 +25,12 @@ const Home = () => {
           });
     },[])
 
+    const handleClick = (evt) => {
+        
+        console.log(evt.target.id);
+        history('/details/'+evt.target.id);
+    }
+
     return (
         <div>
             <h1>Home</h1>
@@ -38,6 +45,7 @@ const Home = () => {
                                 height="100"
                                 image={item.iconUrl}
                                 alt={item.name}
+                                
                                 />
                                 <CardContent>
                                 <Typography gutterBottom variant="h5" component="div">
@@ -46,8 +54,8 @@ const Home = () => {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                <Button size="small" color="primary">
-                                Share
+                                <Button id={item.uuid} size="small" color="primary" onClick={handleClick}>
+                                    Share
                                 </Button>
                             </CardActions>
                             </Card>

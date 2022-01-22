@@ -2,13 +2,26 @@ import axios from 'axios';
 
 const headers = {
     'x-rapidapi-host': 'coinranking1.p.rapidapi.com',
-    'x-rapidapi-key': '***'
+    'x-rapidapi-key': ''
+    //ecd51a7c8cmsh3ac51f3b2909282p117782jsn30d4d7b8b3aa
 }
 
 
 
 class CoinbaseService {
     
+    async GetCoin(coin) {
+
+        const paramsCoin = {
+            referenceCurrencyUuid: 'yhjMzLPhuIDl', 
+            timePeriod: '24h'
+        };
+
+        const response = await axios.get(`https://coinranking2.p.rapidapi.com/coin/${coin}`,{headers, params: paramsCoin });
+        const data = await response.data;
+        return data.data.coin;
+    }
+
     async GetCoins() {
 
         const paramsCoins = {
