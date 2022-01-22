@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const headers = {
     'x-rapidapi-host': 'coinranking1.p.rapidapi.com',
-    'x-rapidapi-key': ''
+    'x-rapidapi-key': 'ecd51a7c8cmsh3ac51f3b2909282p117782jsn30d4d7b8b3aa'
     //ecd51a7c8cmsh3ac51f3b2909282p117782jsn30d4d7b8b3aa
 }
 
@@ -17,7 +17,7 @@ class CoinbaseService {
             timePeriod: '24h'
         };
 
-        const response = await axios.get(`https://coinranking2.p.rapidapi.com/coin/${coin}`,{headers, params: paramsCoin });
+        const response = await axios.get(`https://coinranking1.p.rapidapi.com/coin/${coin}`,{headers, params: paramsCoin });
         const data = await response.data;
         return data.data.coin;
     }
@@ -34,7 +34,7 @@ class CoinbaseService {
             offset: '0'
           }
 
-        const response = await axios.get(`https://coinranking2.p.rapidapi.com/coins`,{headers, params: paramsCoins });
+        const response = await axios.get(`https://coinranking1.p.rapidapi.com/coins`,{headers, params: paramsCoins });
         const data = await response.data;
         return data.data.coins;
     }

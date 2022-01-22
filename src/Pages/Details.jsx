@@ -183,11 +183,12 @@ function Details(props) {
               </Grid>
               <Grid style={style.buttonBox} item xs={12} md={6}>
                 <ButtonGroup variant="text">
-                  {/* 24h 7d 30d 1y 5y */}
+                  {/* 3h 24h 7d 30d 3m 1y 3y 5y */}
                   <Button onClick={handleClick} id="24h" style={period === "24h" ? style.buttonActive : style.buttonGroup}>1D</Button>
                   <Button onClick={handleClick} id="7d" style={period === "7d" ? style.buttonActive : style.buttonGroup}>1W</Button>
                   <Button onClick={handleClick} id="30d" style={period === "30d" ? style.buttonActive : style.buttonGroup}>1M</Button>
                   <Button onClick={handleClick} id="1y" style={period === "1y" ? style.buttonActive : style.buttonGroup}>1Y</Button>
+                  <Button onClick={handleClick} id="3y" style={period === "3y" ? style.buttonActive : style.buttonGroup}>3Y</Button>
                   <Button onClick={handleClick} id="5y" style={period === "5y" ? style.buttonActive : style.buttonGroup}>ALL</Button>
                 </ButtonGroup>
               </Grid>
