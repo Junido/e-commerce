@@ -5,7 +5,7 @@ import {Grid, Typography, ButtonGroup, Button} from '@mui/material';
 import AlertBar from '../component/AlertBar';
 import { useParams } from "react-router-dom";
  
-function Details(props) {
+function Details() {
     var { id } = useParams();
     const [coinDetails, setCoinDetails] = useState([]);
     const [coin, setCoin] = useState([]);
@@ -41,8 +41,8 @@ function Details(props) {
     }
 
     const GetCoinHistory = (period) => {
-        coinBaseService.GetCoinHistory(id,period).then((items) =>{
-
+        coinBaseService.GetCoinHistory(id,period).then((res) =>{
+        var items = res.reverse(x => x.timestamp).filter(f => f.price != null);
         var mTaux = (((Number(items[items.length - 1]?.price) - Number(items[0]?.price)) / Number(items[items.length - 1]?.price)) * 100).toFixed(2);
         setTaux(mTaux);
         setisTauxMin(Math.sign(mTaux) === -1);
@@ -56,12 +56,13 @@ function Details(props) {
     }
 
     const getPrice = () => {
-        var res = coin.reverse(x => x.timestamp*1000).map(x => x.price);
+        var res = coin.map(x => x.price);
         return res;
     }
 
     const getTime = () => {
-        var times = coin.reverse(x => x.timestamp*1000).map(x => new Date(x.timestamp*1000).toDateString());
+        var times = coin.map(x => new Date(x.timestamp*1000).toDateString());
+
         return times;
     }
     
@@ -82,7 +83,8 @@ function Details(props) {
       scales: {
           yAxes: {
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              display:false
             }
           }
       },
@@ -99,7 +101,7 @@ function Details(props) {
                 font: {
                     size: 12
                 },
-                
+                display:false,
             }
         }
       }
@@ -165,6 +167,14 @@ function Details(props) {
         <div >
            <AlertBar open={stateAlert.myopen} msg={stateAlert.msg} />
             <Grid container spacing={3}>
+              <Grid item xs={1} md={1}>
+                <img src={coinDetails.iconUrl} width={80} />
+              </Grid>
+              <Grid item xs={11} md={11}>
+                <h1>{coinDetails.name}</h1>
+              </Grid>
+                {/* <div dangerouslySetInnerHTML={{ __html: coinDetails.description}}>
+                </div> */}
               <Grid style={style.boxPrice} item xs={12} md={6}>
                 <Typography style={style.devise} variant="span" >
                   $
