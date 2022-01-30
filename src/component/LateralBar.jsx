@@ -1,25 +1,35 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { ListItemIcon,Toolbar, Box, Drawer,Divider,ListItemText,List,ListItem} from '@mui/material';
-import { Mail, MoveToInbox } from '@mui/icons-material';
-function LateralBar(props) {
+import { Mail, MoveToInbox, BarChart, SsidChart, ShowChart } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
+
+function LateralBar({ open }) {
+
+    const [size, SetSize] = useState(null);
+    
+    useEffect(() => {
+        reportWindowSize();
+    },[size])
 
     const  reportWindowSize = () => {
-        return window.innerWidth;
+        console.log(window.innerWidth);
+        SetSize(window.innerWidth);
     }
 
     window.addEventListener('resize', reportWindowSize);
-
     const drawer = (
         
         <Box sx={{ overflow: 'auto' }}>
             <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                <ListItem button key={text}>
-                <ListItemIcon>
-                    {index % 2 === 0 ? <MoveToInbox /> : <Mail />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-                </ListItem>
+            {['Trade', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                 <Link to="/" >
+                    <ListItem button key={text}>
+                    <ListItemIcon>
+                        {index % 2 === 0 ? <BarChart /> : <ShowChart />}
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                    </ListItem>
+                </Link>
             ))}
             </List>
             <Divider />
@@ -37,8 +47,8 @@ function LateralBar(props) {
     )
     return (
         <Drawer
-           
-            open={false}
+            variant = {size > 899 ? "permanent" : null }
+            open={open}
             sx={{
                 width: 200,
                 flexShrink: 0,

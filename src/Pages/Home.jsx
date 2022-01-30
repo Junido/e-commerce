@@ -33,7 +33,7 @@ const Home = () => {
 
     return (
         <div>
-            <h1>Home</h1>
+            <h1>Trade</h1>
             <Grid container spacing={2} sx={{display:'flex', justifyContent:'center'}}>
                 {coins?.map((item, index) => {
                     return (

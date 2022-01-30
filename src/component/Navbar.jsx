@@ -19,12 +19,13 @@ function Navbar(props) {
                   <img src={logoRocket} alt="logo Rocket" width="150px" />
                 </Link>
           </Avatar>
-          <Link to="/" style={{ textDecoration: 'inherit' }}>
+          <Link  to="/" style={{ textDecoration: 'none', color:'#000' }}>
           <Typography
+
             variant="h5"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block', fontWeight: 'bold' } ,p:2.5 }}
+            sx={{ display: { xs: 'none', sm: 'block', fontWeight: 'bold'} ,p:2.5 }}
           >
             Cryptocurrency
           </Typography>

@@ -4,7 +4,7 @@ import coinBaseService from '../services/CoinbaseService';
 import {Grid, Typography, ButtonGroup, Button} from '@mui/material';
 import AlertBar from '../component/AlertBar';
 import { useParams } from "react-router-dom";
- 
+
 function Details() {
     var { id } = useParams();
     const [coinDetails, setCoinDetails] = useState([]);
@@ -18,8 +18,8 @@ function Details() {
     });
     
     useEffect(() => {
-      GetCoin(id);
-      GetCoinHistory(period);
+        GetCoin(id);
+        GetCoinHistory(period);
     },[period]);
 
     const GetCoin = (coin) => {
@@ -167,24 +167,21 @@ function Details() {
         <div >
            <AlertBar open={stateAlert.myopen} msg={stateAlert.msg} />
             <Grid container spacing={3}>
-              <Grid item xs={1} md={1}>
-                <img src={coinDetails.iconUrl} width={80} />
+              <Grid item xs={3} md={1}>
+                <img alt={coinDetails.name} src={coinDetails.iconUrl} width={80} />
               </Grid>
-              <Grid item xs={11} md={11}>
+              <Grid item xs={9} md={11}>
                 <h1>{coinDetails.name}</h1>
               </Grid>
-                {/* <div dangerouslySetInnerHTML={{ __html: coinDetails.description}}>
-                </div> */}
               <Grid style={style.boxPrice} item xs={12} md={6}>
                 <Typography style={style.devise} variant="span" >
                   $
                 </Typography>
                 <Typography style={style.price} variant="span" >
-                  {coinDetails && coinDetails.price}
+                  {coinDetails && 
+                    Number(coinDetails.price)
+                  }
                 </Typography>
-                {/* <Typography style={style.devise} variant="span" >
-                  {coin && `.${coin[coin.length - 1]?.price}`}
-                </Typography> */}
                 <Typography style={isTauxMin ? style.tauxMin : style.tauxPlus} variant="span" >
                   {coin && 
                     `${taux}%`
