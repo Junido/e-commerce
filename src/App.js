@@ -2,7 +2,7 @@ import React,  { useState} from 'react';
 import { BrowserRouter as Router,Route, Routes } from "react-router-dom";
 import './App.css';
 import Navbar from './component/Navbar';
-import {Home, Details } from './Pages';
+import {Home, Details, Trade, News } from './Pages';
 import LateralBar from './component/LateralBar';
 import { Container, Grid} from '@mui/material';
 function App() {
@@ -24,6 +24,8 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path='/details/:id' element={<Details />} />
+                    <Route path='/Trade' element={<Trade />} />
+                    <Route path='/News' element={<News />} />
                 </Routes>
               </Container>
             </Grid>

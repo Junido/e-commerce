@@ -20,7 +20,7 @@ class CoinbaseService {
         return data.data.coin;
     }
 
-    async GetCoins() {
+    async GetCoins(limit, offset) {
 
         const paramsCoins = {
             referenceCurrencyUuid: 'yhjMzLPhuIDl',
@@ -28,8 +28,8 @@ class CoinbaseService {
             tiers: '1',
             orderBy: 'marketCap',
             orderDirection: 'desc',
-            limit: '100',
-            offset: '0'
+            limit: 100,
+            offset: 0
           }
 
         const response = await axios.get(`https://coinranking1.p.rapidapi.com/coins`,{headers, params: paramsCoins });

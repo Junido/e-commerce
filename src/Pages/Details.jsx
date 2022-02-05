@@ -7,16 +7,21 @@ import { useParams } from "react-router-dom";
 
 function Details() {
     var { id } = useParams();
+    const PeriodBtn = [
+		  {'code':'24h', 'value':'1D'},
+		  {'code':'7d',  'value':'1W'},
+		  {'code':'30d', 'value':'1M'},
+		  {'code':'1y',  'value':'1Y'},
+		  {'code':'3y',  'value':'3Y'},
+		  {'code':'5y', 'value':'ALL'}
+	  ]
     const [coinDetails, setCoinDetails] = useState([]);
     const [coin, setCoin] = useState([]);
     const [taux, setTaux] = useState(0);
     const [isTauxMin, setisTauxMin] = useState(0);
     const [period, setPeriod] = useState('7d');
-    const [stateAlert, setstateAlert] = useState({
-      msg:"",
-      myopen:false
-    });
-    
+    const [stateAlert, setstateAlert] = useState({ msg:"", myopen:false});
+
     useEffect(() => {
         GetCoin(id);
         GetCoinHistory(period);
@@ -147,7 +152,7 @@ function Details() {
         fontSize:'12px',
       },
       buttonActive: {
-        color:'black',
+        color:'red',
         border:'none',
         fontSize:'12px',
         backgroundColor: 'rgba(0, 0, 0, 0.08)',
@@ -190,13 +195,12 @@ function Details() {
               </Grid>
               <Grid style={style.buttonBox} item xs={12} md={6}>
                 <ButtonGroup variant="text">
-                  {/* 3h 24h 7d 30d 3m 1y 3y 5y */}
-                  <Button onClick={handleClick} id="24h" style={period === "24h" ? style.buttonActive : style.buttonGroup}>1D</Button>
-                  <Button onClick={handleClick} id="7d" style={period === "7d" ? style.buttonActive : style.buttonGroup}>1W</Button>
-                  <Button onClick={handleClick} id="30d" style={period === "30d" ? style.buttonActive : style.buttonGroup}>1M</Button>
-                  <Button onClick={handleClick} id="1y" style={period === "1y" ? style.buttonActive : style.buttonGroup}>1Y</Button>
-                  <Button onClick={handleClick} id="3y" style={period === "3y" ? style.buttonActive : style.buttonGroup}>3Y</Button>
-                  <Button onClick={handleClick} id="5y" style={period === "5y" ? style.buttonActive : style.buttonGroup}>ALL</Button>
+                  {/* 24h 7d 30d 1y 3y 5y */}
+                  {PeriodBtn.map(p => {
+                    return (
+                      <Button onClick={handleClick} id={p.code} style={period === p.code ? style.buttonActive : style.buttonGroup}>{p.value}</Button>
+                    )
+                  })}
                 </ButtonGroup>
               </Grid>
               <Grid  item xs={12}>

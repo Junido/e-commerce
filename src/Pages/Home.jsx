@@ -2,23 +2,24 @@ import React, { useState, useEffect } from 'react'
 import Service from '../services/CoinbaseService';
 import AlertBar from '../component/AlertBar';
 import { useNavigate  } from "react-router-dom";
-import {Card, CardActionArea, CardMedia, CardContent, Typography,ListItemButton, CardActions, Button, Grid, CircularProgress, TextField ,Paper,List,ListItem,ListItemAvatar,Avatar,ListItemText,Divider} from '@mui/material';
+import {Card, CardActionArea, CardMedia, CardContent,Pagination, Typography,ListItemButton, CardActions, Button, Grid, CircularProgress, TextField ,Paper,List,ListItem,ListItemAvatar,Avatar,ListItemText,Divider} from '@mui/material';
 import { flexbox } from '@mui/system';
 const Home = () => {
     const history = useNavigate();
     const [coins, setCoins] = useState();
     const [stats, setStats] = useState();
-    const [ search, setSearch ] = useState("");
+    const [search, setSearch ] = useState("");
+    const [page, setPage ] = useState(1);
     const [stateAlert, setstateAlert] = useState({
         msg:"",
         myopen:false
     });
-
+    
     useEffect(() => {
         Service.GetCoins().then((items) =>{
            console.log(items);
             setStats(items?.stats);
-            setCoins(items?.coins?.filter(x=> x.name.toUpperCase().includes(search.toUpperCase())));
+            setCoins(items?.coins?.filter(x=> x.name.toUpperCase().includes(search.toUpperCase())).slice((page-1)*10),10);
           }).catch(error => {
              
               setstateAlert({
@@ -26,7 +27,7 @@ const Home = () => {
                 myopen:true
               });
           });
-    },[search])
+    },[search, page])
 
     const handleClick = (evt,uid) => {
   
@@ -38,11 +39,16 @@ const Home = () => {
         setSearch(event.target.value);
     };
 
+    const pageChange = (event, value) => {
+        setPage(value);
+    };
+
     return (
         <div>
-            <h1>Trade</h1>
+            <h1>Assets</h1>
             <Paper sx={{marginBottom:"10px", padding:"10px",height:"50px", display:"flex", alignItems:"center"}}>
                 <TextField size="small"  onChange={handleChange} id="outlined-basic" label="Search" variant="outlined" />
+                <Pagination count={10} page={page} onChange={pageChange} color="secondary" />
             </Paper>
                 <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
                     {coins ? coins.map((item, index) => {

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import { ListItemIcon,Toolbar, Box, Drawer,Divider,ListItemText,List,ListItem} from '@mui/material';
-import { Mail, MoveToInbox, BarChart, ShowChart } from '@mui/icons-material';
+import { ListItemIcon,Toolbar, Box, Drawer,ListItemText,List,ListItem} from '@mui/material';
+import { FeedOutlined, ShowChartOutlined, PieChartOutlined } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 function LateralBar(props) {
@@ -21,27 +21,30 @@ function LateralBar(props) {
         
         <Box sx={{ overflow: 'auto' }}>
             <List>
-            {['Trade', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                 <Link to="/" >
-                    <ListItem button key={text}>
-                    <ListItemIcon>
-                        {index % 2 === 0 ? <BarChart /> : <ShowChart />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
+                <Link to="/" style={{ textDecoration: 'none', color:"inherit" }} >
+                    <ListItem sx={{ marginTop:"10px"}} button key="Assets">
+                        <ListItemIcon>
+                            <PieChartOutlined />
+                        </ListItemIcon>
+                        <ListItemText primary="Assets" />
                     </ListItem>
                 </Link>
-            ))}
-            </List>
-            <Divider />
-            <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                <ListItem button key={text}>
-                <ListItemIcon>
-                    {index % 2 === 0 ? <MoveToInbox /> : <Mail />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-                </ListItem>
-            ))}
+                <Link to="/Trade" style={{ textDecoration: 'none', color:"inherit" }} >
+                    <ListItem sx={{ marginTop:"10px"}} button key="Trade">
+                        <ListItemIcon>
+                            <ShowChartOutlined />
+                        </ListItemIcon>
+                        <ListItemText primary="Trade" />
+                    </ListItem>
+                </Link>
+                <Link to="/News" style={{ textDecoration: 'none', color:"inherit" }} >
+                    <ListItem sx={{ marginTop:"10px"}} button key="News">
+                        <ListItemIcon>
+                            <FeedOutlined />
+                        </ListItemIcon>
+                        <ListItemText primary="News" />
+                    </ListItem>
+                </Link>
             </List>
         </Box>
     )
