@@ -19,7 +19,7 @@ const Home = () => {
         Service.GetCoins().then((items) =>{
            console.log(items);
             setStats(items?.stats);
-            setCoins(items?.coins?.filter(x=> x.name.toUpperCase().includes(search.toUpperCase())).slice((page-1)*10),10);
+            setCoins(items?.coins?.filter(x=> x.name.toUpperCase().includes(search.toUpperCase())).slice(search != "" ? 0 :(page-1)*10),10);
           }).catch(error => {
              
               setstateAlert({
