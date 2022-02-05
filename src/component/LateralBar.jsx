@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import { ListItemIcon,Toolbar, Box, Drawer,Divider,ListItemText,List,ListItem} from '@mui/material';
-import { Mail, MoveToInbox, BarChart, SsidChart, ShowChart } from '@mui/icons-material';
+import { Mail, MoveToInbox, BarChart, ShowChart } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
-function LateralBar({ open }) {
+function LateralBar(props) {
 
     const [size, SetSize] = useState(null);
     
@@ -12,7 +12,7 @@ function LateralBar({ open }) {
     },[size])
 
     const  reportWindowSize = () => {
-        console.log(window.innerWidth);
+       
         SetSize(window.innerWidth);
     }
 
@@ -48,7 +48,7 @@ function LateralBar({ open }) {
     return (
         <Drawer
             variant = {size > 899 ? "permanent" : null }
-            open={open}
+            open={props.open}
             sx={{
                 width: 200,
                 flexShrink: 0,

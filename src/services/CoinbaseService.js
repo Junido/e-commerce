@@ -6,8 +6,6 @@ const headers = {
     //ecd51a7c8cmsh3ac51f3b2909282p117782jsn30d4d7b8b3aa
 }
 
-
-
 class CoinbaseService {
     
     async GetCoin(coin) {
@@ -30,13 +28,13 @@ class CoinbaseService {
             tiers: '1',
             orderBy: 'marketCap',
             orderDirection: 'desc',
-            limit: '50',
+            limit: '100',
             offset: '0'
           }
 
         const response = await axios.get(`https://coinranking1.p.rapidapi.com/coins`,{headers, params: paramsCoins });
         const data = await response.data;
-        return data.data.coins;
+        return data.data;
     }
 
     /*

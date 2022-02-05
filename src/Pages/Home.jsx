@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react'
 import Service from '../services/CoinbaseService';
 import AlertBar from '../component/AlertBar';
 import { useNavigate  } from "react-router-dom";
-import {Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, Grid  } from '@mui/material';
+import {Card, CardActionArea, CardMedia, CardContent, Typography,ListItemButton, CardActions, Button, Grid, CircularProgress, TextField ,Paper,List,ListItem,ListItemAvatar,Avatar,ListItemText,Divider} from '@mui/material';
+import { flexbox } from '@mui/system';
 const Home = () => {
     const history = useNavigate();
     const [coins, setCoins] = useState();
-
+    const [stats, setStats] = useState();
+    const [ search, setSearch ] = useState("");
     const [stateAlert, setstateAlert] = useState({
         msg:"",
         myopen:false
@@ -14,55 +16,67 @@ const Home = () => {
 
     useEffect(() => {
         Service.GetCoins().then((items) =>{
-            console.log(items);
-            setCoins(items);
+           console.log(items);
+            setStats(items?.stats);
+            setCoins(items?.coins?.filter(x=> x.name.toUpperCase().includes(search.toUpperCase())));
           }).catch(error => {
-              console.log(error.response)
+             
               setstateAlert({
-                msg:error.response.data.message,
+                msg:error?.response?.data?.message,
                 myopen:true
               });
           });
-    },[])
+    },[search])
 
-    const handleClick = (evt) => {
-        
-        console.log(evt.target.id);
-        history('/details/'+evt.target.id);
+    const handleClick = (evt,uid) => {
+  
+        history('/details/'+uid);
     }
+
+    const handleChange = (event) => {
+        
+        setSearch(event.target.value);
+    };
 
     return (
         <div>
             <h1>Trade</h1>
-            <Grid container spacing={2} sx={{display:'flex', justifyContent:'center'}}>
-                {coins?.map((item, index) => {
-                    return (
-                        <Grid item spacing={1}>
-                            <Card sx={{ width: 300 }}>
-                            <CardActionArea>
-                                <CardMedia
-                                component="img"
-                                height="100"
-                                image={item.iconUrl}
-                                alt={item.name}
-                                
-                                />
-                                <CardContent>
-                                <Typography gutterBottom variant="h5" component="div">
-                                    {item.name}
-                                </Typography>
-                                </CardContent>
-                            </CardActionArea>
-                            <CardActions>
-                                <Button id={item.uuid} size="small" color="primary" onClick={handleClick}>
-                                    Share
-                                </Button>
-                            </CardActions>
-                            </Card>
-                        </Grid>
-                    );
-                })}
-            </Grid>
+            <Paper sx={{marginBottom:"10px", padding:"10px",height:"50px", display:"flex", alignItems:"center"}}>
+                <TextField size="small"  onChange={handleChange} id="outlined-basic" label="Search" variant="outlined" />
+            </Paper>
+                <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                    {coins ? coins.map((item, index) => {
+                        return (
+                            <>
+                             <ListItemButton onClick={(event) => handleClick(event,item.uuid)}>
+                                <ListItem alignItems="flex-start" >
+                                    <ListItemAvatar>
+                                    <Avatar alt="Remy Sharp" src={item.iconUrl} />
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                    
+                                    primary={item.name}
+                                    secondary={
+                                        <React.Fragment>
+                                        <Typography
+                                            sx={{ display: 'inline' }}
+                                            component="span"
+                                            variant="body2"
+                                            color="text.primary"
+                                        >
+                                            Ali Connors
+                                        </Typography>
+                                        {" — I'll be in your neighborhood doing errands this…"}
+                                        </React.Fragment>
+                                    }
+                                    />
+                                </ListItem>
+                            </ListItemButton>
+                            <Divider variant="inset" component="li" />
+                        </>
+                        );
+                    }) : <CircularProgress />}
+                </List>
             <AlertBar open={stateAlert.myopen} msg={stateAlert.msg} />
         </div>
     )

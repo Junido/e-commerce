@@ -20,11 +20,11 @@ function Details() {
     useEffect(() => {
         GetCoin(id);
         GetCoinHistory(period);
-    },[period]);
+    },[period,id]);
 
     const GetCoin = (coin) => {
       coinBaseService.GetCoin(coin).then((items) =>{
-        console.log('coin',items);
+        
         setCoinDetails({
           price:items.price,
           name:items.name,
