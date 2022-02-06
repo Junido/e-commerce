@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Service from '../services/CoinbaseService';
-import AlertBar from '../component/AlertBar';
+import AlertBar from '../components/AlertBar';
 import { useNavigate  } from "react-router-dom";
 import {Card, CardActionArea, CardMedia, CardContent,Pagination, Typography,ListItemButton, CardActions, Button, Grid, CircularProgress, TextField ,Paper,List,ListItem,ListItemAvatar,Avatar,ListItemText,Divider} from '@mui/material';
-import { flexbox } from '@mui/system';
+
 const Home = () => {
     const history = useNavigate();
     const [coins, setCoins] = useState();
@@ -19,7 +19,9 @@ const Home = () => {
         Service.GetCoins().then((items) =>{
            console.log(items);
             setStats(items?.stats);
-            setCoins(items?.coins?.filter(x=> x.name.toUpperCase().includes(search.toUpperCase())).slice(search != "" ? 0 :(page-1)*10),10);
+            var start = search != "" ? 0 : ((page-1)*10);
+            var end = search != "" ? 10 : 10*(page-1)+10;
+            setCoins(items?.coins?.filter(x=> x.name.toUpperCase().includes(search.toUpperCase())).slice(start,end));
           }).catch(error => {
              
               setstateAlert({
@@ -30,12 +32,10 @@ const Home = () => {
     },[search, page])
 
     const handleClick = (evt,uid) => {
-  
         history('/details/'+uid);
     }
 
     const handleChange = (event) => {
-        
         setSearch(event.target.value);
     };
 
@@ -46,35 +46,41 @@ const Home = () => {
     return (
         <div>
             <h1>Assets</h1>
-            <Paper sx={{marginBottom:"10px", padding:"10px",height:"50px", display:"flex", alignItems:"center"}}>
-                <TextField size="small"  onChange={handleChange} id="outlined-basic" label="Search" variant="outlined" />
-                <Pagination count={10} page={page} onChange={pageChange} color="secondary" />
+            <Paper sx={{marginBottom:"10px", padding:"10px",height:"100px", display:"flex", alignItems:"center"}}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                        <TextField fullWidth  size="small"  onChange={handleChange} id="outlined-basic" label="Search" variant="outlined" />
+                    </Grid>
+                    <Grid item xs={12} md={12} sx={{display:"flex", justifyContent:"center"}}>
+                        <Pagination count={10} page={page} onChange={pageChange} color="secondary" />
+                    </Grid>
+                </Grid>
             </Paper>
-                <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+            <div style={{display:"flex",justifyContent:"center" }}>
+            <List sx={{ width: '100%', bgcolor: 'background.paper'}}>
                     {coins ? coins.map((item, index) => {
                         return (
                             <>
-                             <ListItemButton onClick={(event) => handleClick(event,item.uuid)}>
+                             <ListItemButton onClick={(event) => handleClick(event,item?.uuid)}>
                                 <ListItem alignItems="flex-start" >
                                     <ListItemAvatar>
-                                    <Avatar alt="Remy Sharp" src={item.iconUrl} />
+                                    <Avatar alt="Remy Sharp" src={item?.iconUrl} />
                                     </ListItemAvatar>
                                     <ListItemText
-                                    
-                                    primary={item.name}
-                                    secondary={
-                                        <React.Fragment>
-                                        <Typography
-                                            sx={{ display: 'inline' }}
-                                            component="span"
-                                            variant="body2"
-                                            color="text.primary"
-                                        >
-                                            Ali Connors
-                                        </Typography>
-                                        {" — I'll be in your neighborhood doing errands this…"}
-                                        </React.Fragment>
-                                    }
+                                        primary={item?.name}
+                                        secondary={
+                                            <React.Fragment>
+                                            <Typography
+                                                sx={{ display: 'inline' }}
+                                                component="span"
+                                                variant="body2"
+                                                color="text.primary"
+                                            >
+                                                {item?.symbol}
+                                            </Typography>
+                                            
+                                            </React.Fragment>
+                                        }
                                     />
                                 </ListItem>
                             </ListItemButton>
@@ -83,6 +89,7 @@ const Home = () => {
                         );
                     }) : <CircularProgress />}
                 </List>
+            </div>
             <AlertBar open={stateAlert.myopen} msg={stateAlert.msg} />
         </div>
     )

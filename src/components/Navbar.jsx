@@ -14,7 +14,7 @@ function Navbar(props) {
     <Box sx={{ flexGrow: 1, p:3 }}>
       <AppBar id="header" className="navbar" position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} >
         <Toolbar>
-           <Avatar alt="Rocket" sx={{ width: 60, height: 60}} >
+           <Avatar alt="Rocket" sx={{ width: 60, height: 60,margin:"5px"}} >
                 <Link to="/">
                   <img src={logoRocket} alt="logo Rocket" width="150px" />
                 </Link>

@@ -2,7 +2,7 @@ import React,  { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import coinBaseService from '../services/CoinbaseService';
 import {Grid, Typography, ButtonGroup, Button} from '@mui/material';
-import AlertBar from '../component/AlertBar';
+import AlertBar from '../components/AlertBar';
 import { useParams } from "react-router-dom";
 
 function Details() {

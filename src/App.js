@@ -1,9 +1,9 @@
 import React,  { useState} from 'react';
 import { BrowserRouter as Router,Route, Routes } from "react-router-dom";
 import './App.css';
-import Navbar from './component/Navbar';
+import Navbar from './components/Navbar';
 import {Home, Details, Trade, News } from './Pages';
-import LateralBar from './component/LateralBar';
+import LateralBar from './components/LateralBar';
 import { Container, Grid} from '@mui/material';
 function App() {
 
