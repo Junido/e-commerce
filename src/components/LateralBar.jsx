@@ -23,7 +23,7 @@ function LateralBar(props) {
             <List>
                 <Link to="/" style={{ textDecoration: 'none', color:"inherit" }} >
                     <ListItem sx={{ marginTop:"10px"}} button key="Assets">
-                        <ListItemIcon>
+                        <ListItemIcon sx={{color:"#fff"}}>
                             <PieChartOutlined />
                         </ListItemIcon>
                         <ListItemText primary="Assets" />
@@ -31,7 +31,7 @@ function LateralBar(props) {
                 </Link>
                 <Link to="/Trade" style={{ textDecoration: 'none', color:"inherit" }} >
                     <ListItem sx={{ marginTop:"10px"}} button key="Trade">
-                        <ListItemIcon>
+                        <ListItemIcon sx={{color:"#fff"}}>
                             <ShowChartOutlined />
                         </ListItemIcon>
                         <ListItemText primary="Trade" />
@@ -39,7 +39,7 @@ function LateralBar(props) {
                 </Link>
                 <Link to="/News" style={{ textDecoration: 'none', color:"inherit" }} >
                     <ListItem sx={{ marginTop:"10px"}} button key="News">
-                        <ListItemIcon>
+                        <ListItemIcon sx={{color:"#fff"}}>
                             <FeedOutlined />
                         </ListItemIcon>
                         <ListItemText primary="News" />
@@ -55,7 +55,7 @@ function LateralBar(props) {
             sx={{
                 width: 200,
                 flexShrink: 0,
-                [`& .MuiDrawer-paper`]: { width: 200, boxSizing: 'border-box' },
+                [`& .MuiDrawer-paper`]: { width: 200, boxSizing: 'border-box',backgroundColor:'#282F36', color:"#fff" },
             }}
             >
             <Toolbar />

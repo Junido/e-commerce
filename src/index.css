@@ -83,3 +83,6 @@ code {
   min-height: 300px;
   z-index: 0;
 }
+h1 {
+  color: #282F36;
+}

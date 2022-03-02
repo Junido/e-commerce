@@ -4,6 +4,7 @@ import coinBaseService from '../services/CoinbaseService';
 import {Grid, Typography, ButtonGroup, Button} from '@mui/material';
 import AlertBar from '../components/AlertBar';
 import { useParams } from "react-router-dom";
+import millify from "millify";
 
 function Details() {
     var { id } = useParams();
@@ -90,6 +91,17 @@ function Details() {
             ticks: {
               beginAtZero: true,
               display:false
+            },
+            grid: {
+              display: false
+            }
+          },
+          xAxes:{
+            ticks: {
+              display:false
+            },
+            grid: {
+              display: false
             }
           }
       },
@@ -183,8 +195,12 @@ function Details() {
                   $
                 </Typography>
                 <Typography style={style.price} variant="span" >
-                  {coinDetails && 
-                    Number(coinDetails.price)
+                  {coinDetails && coinDetails.price && 
+                     millify(parseFloat(coinDetails.price),{
+                      precision: 6,
+                      decimalSeparator: "."
+                    })
+                    //millify(parseFloat(coinDetails.price).toFixed(0))//parseFloat().toFixed(2)
                   }
                 </Typography>
                 <Typography style={isTauxMin ? style.tauxMin : style.tauxPlus} variant="span" >

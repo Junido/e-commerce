@@ -17,7 +17,7 @@ function App() {
               <Navbar setOpenMenu={setOpenMenu} openMenu= {openMenu} />
             </Grid>
             <Grid item  xs={2} md={2}>
-              <LateralBar setOpenMenu={setOpenMenu} open={openMenu} />
+              <LateralBar className="LateralBar" setOpenMenu={setOpenMenu} open={openMenu} />
             </Grid>
             <Grid item xs={9} md={9}>
               <Container className='app-container' sx={{ overflow: 'auto'}} maxWidth="lg">

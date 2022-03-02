@@ -25,7 +25,7 @@ function Navbar(props) {
             variant="h5"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block', fontWeight: 'bold'} ,p:2.5 }}
+            sx={{ display: { xs: 'none', sm: 'block', fontWeight: 'bold',color:'#282F36'} ,p:2.5 }}
           >
             Cryptocurrency
           </Typography>

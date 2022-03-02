@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Service from '../services/CoinbaseService';
 import AlertBar from '../components/AlertBar';
 import { useNavigate  } from "react-router-dom";
-import {Card, CardActionArea, CardMedia, CardContent,Pagination, Typography,ListItemButton, CardActions, Button, Grid, CircularProgress, TextField ,Paper,List,ListItem,ListItemAvatar,Avatar,ListItemText,Divider} from '@mui/material';
+import {Pagination, Typography,ListItemButton, Grid, CircularProgress, TextField ,Paper,List,ListItem,ListItemAvatar,Avatar,ListItemText,Divider} from '@mui/material';
 
 const Home = () => {
     const history = useNavigate();
@@ -52,7 +52,7 @@ const Home = () => {
                         <TextField fullWidth  size="small"  onChange={handleChange} id="outlined-basic" label="Search" variant="outlined" />
                     </Grid>
                     <Grid item xs={12} md={12} sx={{display:"flex", justifyContent:"center"}}>
-                        <Pagination count={10} page={page} onChange={pageChange} color="secondary" />
+                        <Pagination count={10} page={page} onChange={pageChange} color="primary" />
                     </Grid>
                 </Grid>
             </Paper>
