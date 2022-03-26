@@ -9,17 +9,20 @@ function LateralBar(props) {
     
     useEffect(() => {
         reportWindowSize();
+        props.setOpenMenu(false);
     },[size])
 
     const  reportWindowSize = () => {
-       
         SetSize(window.innerWidth);
+    }
+    const MenuClick = () => {
+        props.setOpenMenu(props.open ? false : true);
     }
 
     window.addEventListener('resize', reportWindowSize);
     const drawer = (
         
-        <Box sx={{ overflow: 'auto' }}>
+        <Box onClick={MenuClick} sx={{ overflow: 'auto' }}>
             <List>
                 <Link to="/" style={{ textDecoration: 'none', color:"inherit" }} >
                     <ListItem sx={{ marginTop:"10px"}} button key="Assets">
